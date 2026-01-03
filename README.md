@@ -13,7 +13,10 @@ Copy the dll files to the following locations:
 
 ```powershell
 Copy-Item -Path ".\build32\Debug\SampleIME.dll" -Destination "C:\Program Files (x86)\SampleIME"
+Copy-Item -Path ".\Dictionary\SampleIMESimplifiedQuanPin.txt" -Destination "C:\Program Files (x86)\SampleIME"
+
 Copy-Item -Path ".\build64\Debug\SampleIME.dll" -Destination "C:\Program Files\SampleIME"
+Copy-Item -Path ".\Dictionary\SampleIMESimplifiedQuanPin.txt" -Destination "C:\Program Files\SampleIME"
 ```
 
 Register the dll files:
