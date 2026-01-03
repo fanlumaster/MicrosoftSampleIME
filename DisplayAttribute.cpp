@@ -17,8 +17,8 @@
 
 void CSampleIME::_ClearCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfContext *pContext)
 {
-    ITfRange *pRangeComposition = nullptr;
-    ITfProperty *pDisplayAttributeProperty = nullptr;
+    ITfRange* pRangeComposition = nullptr;
+    ITfProperty* pDisplayAttributeProperty = nullptr;
 
     // get the compositon range.
     if (FAILED(_pComposition->GetRange(&pRangeComposition)))
@@ -44,11 +44,10 @@ void CSampleIME::_ClearCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfCon
 //
 //----------------------------------------------------------------------------
 
-BOOL CSampleIME::_SetCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfContext *pContext,
-                                                  TfGuidAtom gaDisplayAttribute)
+BOOL CSampleIME::_SetCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfContext *pContext, TfGuidAtom gaDisplayAttribute)
 {
-    ITfRange *pRangeComposition = nullptr;
-    ITfProperty *pDisplayAttributeProperty = nullptr;
+    ITfRange* pRangeComposition = nullptr;
+    ITfProperty* pDisplayAttributeProperty = nullptr;
     HRESULT hr = S_OK;
 
     // we need a range and the context it lives in
@@ -67,7 +66,7 @@ BOOL CSampleIME::_SetCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfConte
         // set the value over the range
         // the application will use this guid atom to lookup the acutal rendering information
         var.vt = VT_I4; // we're going to set a TfGuidAtom
-        var.lVal = gaDisplayAttribute;
+        var.lVal = gaDisplayAttribute; 
 
         hr = pDisplayAttributeProperty->SetValue(ec, pRangeComposition, &var);
 
@@ -88,9 +87,8 @@ BOOL CSampleIME::_SetCompositionDisplayAttributes(TfEditCookie ec, _In_ ITfConte
 
 BOOL CSampleIME::_InitDisplayAttributeGuidAtom()
 {
-    ITfCategoryMgr *pCategoryMgr = nullptr;
-    HRESULT hr = CoCreateInstance(CLSID_TF_CategoryMgr, nullptr, CLSCTX_INPROC_SERVER, IID_ITfCategoryMgr,
-                                  (void **)&pCategoryMgr);
+    ITfCategoryMgr* pCategoryMgr = nullptr;
+    HRESULT hr = CoCreateInstance(CLSID_TF_CategoryMgr, nullptr, CLSCTX_INPROC_SERVER, IID_ITfCategoryMgr, (void**)&pCategoryMgr);
 
     if (FAILED(hr))
     {
@@ -99,13 +97,13 @@ BOOL CSampleIME::_InitDisplayAttributeGuidAtom()
 
     // register the display attribute for input text.
     hr = pCategoryMgr->RegisterGUID(Global::SampleIMEGuidDisplayAttributeInput, &_gaDisplayAttributeInput);
-    if (FAILED(hr))
+	if (FAILED(hr))
     {
         goto Exit;
     }
     // register the display attribute for the converted text.
     hr = pCategoryMgr->RegisterGUID(Global::SampleIMEGuidDisplayAttributeConverted, &_gaDisplayAttributeConverted);
-    if (FAILED(hr))
+	if (FAILED(hr))
     {
         goto Exit;
     }

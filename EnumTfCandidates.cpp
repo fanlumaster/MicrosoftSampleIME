@@ -8,8 +8,7 @@
 #include "private.h"
 #include "EnumTfCandidates.h"
 
-HRESULT CEnumTfCandidates::CreateInstance(_Out_ CEnumTfCandidates **ppobj,
-                                          _In_ const CSampleImeArray<ITfCandidateString *> &rgelm, UINT currentNum)
+HRESULT CEnumTfCandidates::CreateInstance(_Out_ CEnumTfCandidates **ppobj, _In_ const CSampleImeArray<ITfCandidateString*> &rgelm, UINT currentNum)
 {
     if (ppobj == nullptr)
     {
@@ -18,7 +17,7 @@ HRESULT CEnumTfCandidates::CreateInstance(_Out_ CEnumTfCandidates **ppobj,
     *ppobj = nullptr;
 
     *ppobj = new (std::nothrow) CEnumTfCandidates(rgelm, currentNum);
-    if (*ppobj == nullptr)
+    if (*ppobj == nullptr) 
     {
         return E_OUTOFMEMORY;
     }
@@ -26,8 +25,7 @@ HRESULT CEnumTfCandidates::CreateInstance(_Out_ CEnumTfCandidates **ppobj,
     return S_OK;
 }
 
-HRESULT CEnumTfCandidates::CreateInstance(REFIID riid, _Out_ void **ppvObj,
-                                          _In_ const CSampleImeArray<ITfCandidateString *> &rgelm, UINT currentNum)
+HRESULT CEnumTfCandidates::CreateInstance(REFIID riid, _Out_ void **ppvObj, _In_ const CSampleImeArray<ITfCandidateString*> &rgelm, UINT currentNum)
 {
     if (ppvObj == nullptr)
     {
@@ -36,15 +34,15 @@ HRESULT CEnumTfCandidates::CreateInstance(REFIID riid, _Out_ void **ppvObj,
     *ppvObj = nullptr;
 
     *ppvObj = new (std::nothrow) CEnumTfCandidates(rgelm, currentNum);
-    if (*ppvObj == nullptr)
+    if (*ppvObj == nullptr) 
     {
         return E_OUTOFMEMORY;
     }
 
-    return ((CEnumTfCandidates *)(*ppvObj))->QueryInterface(riid, ppvObj);
+    return ((CEnumTfCandidates*)(*ppvObj))->QueryInterface(riid, ppvObj);
 }
 
-CEnumTfCandidates::CEnumTfCandidates(_In_ const CSampleImeArray<ITfCandidateString *> &rgelm, UINT currentNum)
+CEnumTfCandidates::CEnumTfCandidates(_In_ const CSampleImeArray<ITfCandidateString*> &rgelm, UINT currentNum)
 {
     _refCount = 0;
     _rgelm = rgelm;
@@ -68,7 +66,7 @@ STDMETHODIMP CEnumTfCandidates::QueryInterface(REFIID riid, _Outptr_ void **ppvO
 
     if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, __uuidof(IEnumTfCandidates)))
     {
-        *ppvObj = (IEnumTfCandidates *)this;
+        *ppvObj = (IEnumTfCandidates*)this;
     }
 
     if (*ppvObj == nullptr)
@@ -96,6 +94,7 @@ STDMETHODIMP_(ULONG) CEnumTfCandidates::Release()
     delete this;
     return 0;
 }
+
 
 //
 // IEnumTfCandidates methods
@@ -143,5 +142,5 @@ STDMETHODIMP CEnumTfCandidates::Reset()
 
 STDMETHODIMP CEnumTfCandidates::Clone(_Out_ IEnumTfCandidates **ppEnum)
 {
-    return CreateInstance(__uuidof(IEnumTfCandidates), (void **)ppEnum, _rgelm, _currentCandidateStrIndex);
+    return CreateInstance(__uuidof(IEnumTfCandidates), (void**)ppEnum, _rgelm, _currentCandidateStrIndex);
 }

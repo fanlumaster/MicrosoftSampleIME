@@ -28,7 +28,7 @@ BOOL CSampleIME::VerifySampleIMECLSID(_In_ REFCLSID clsid)
 
 STDAPI CSampleIME::OnActivated(_In_ REFCLSID clsid, _In_ REFGUID guidProfile, _In_ BOOL isActivated)
 {
-    guidProfile;
+	guidProfile;
 
     if (FALSE == VerifySampleIMECLSID(clsid))
     {
@@ -70,7 +70,7 @@ STDAPI CSampleIME::OnActivated(_In_ REFCLSID clsid, _In_ REFGUID guidProfile, _I
 
 BOOL CSampleIME::_InitActiveLanguageProfileNotifySink()
 {
-    ITfSource *pSource = nullptr;
+    ITfSource* pSource = nullptr;
     BOOL ret = FALSE;
 
     if (_pThreadMgr->QueryInterface(IID_ITfSource, (void **)&pSource) != S_OK)
@@ -78,8 +78,7 @@ BOOL CSampleIME::_InitActiveLanguageProfileNotifySink()
         return ret;
     }
 
-    if (pSource->AdviseSink(IID_ITfActiveLanguageProfileNotifySink, (ITfActiveLanguageProfileNotifySink *)this,
-                            &_activeLanguageProfileNotifySinkCookie) != S_OK)
+    if (pSource->AdviseSink(IID_ITfActiveLanguageProfileNotifySink, (ITfActiveLanguageProfileNotifySink *)this, &_activeLanguageProfileNotifySinkCookie) != S_OK)
     {
         _activeLanguageProfileNotifySinkCookie = TF_INVALID_COOKIE;
         goto Exit;
@@ -101,7 +100,7 @@ Exit:
 
 void CSampleIME::_UninitActiveLanguageProfileNotifySink()
 {
-    ITfSource *pSource = nullptr;
+    ITfSource* pSource = nullptr;
 
     if (_activeLanguageProfileNotifySinkCookie == TF_INVALID_COOKIE)
     {

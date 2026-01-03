@@ -5,14 +5,6 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved
 
-#ifndef UNICODE
-#define UNICODE
-#endif // !UNICODE
-
-#ifndef _UNICODE
-#define _UNICODE
-#endif // !UNICODE
-
 #include "Private.h"
 #include "RegKey.h"
 
@@ -38,6 +30,7 @@ CRegKey::~CRegKey()
     Close();
 }
 
+
 //---------------------------------------------------------------------
 //
 // operator
@@ -55,15 +48,13 @@ HKEY CRegKey::GetHKEY()
 //
 //---------------------------------------------------------------------
 
-LONG CRegKey::Create(_In_ HKEY hKeyPresent, _In_ LPCWSTR pwszKeyName, _In_reads_opt_(255) LPWSTR pwszClass,
-                     DWORD dwOptions, REGSAM samDesired, _Inout_ LPSECURITY_ATTRIBUTES lpSecAttr,
-                     _Out_opt_ LPDWORD lpdwDisposition)
+LONG CRegKey::Create(_In_ HKEY hKeyPresent, _In_ LPCWSTR pwszKeyName, _In_reads_opt_(255) LPWSTR pwszClass, DWORD dwOptions, REGSAM samDesired, _Inout_ LPSECURITY_ATTRIBUTES lpSecAttr, _Out_opt_ LPDWORD lpdwDisposition)
 {
     DWORD disposition = 0;
     HKEY keyHandle = nullptr;
 
-    LONG res = RegCreateKeyEx(hKeyPresent, pwszKeyName, 0, pwszClass, dwOptions, samDesired, lpSecAttr, &keyHandle,
-                              &disposition);
+    LONG res = RegCreateKeyEx(hKeyPresent, pwszKeyName, 0,
+        pwszClass, dwOptions, samDesired, lpSecAttr, &keyHandle, &disposition);
 
     if (lpdwDisposition != nullptr)
     {
@@ -141,7 +132,7 @@ LONG CRegKey::RecurseDeleteKey(_In_ LPCWSTR pwszSubKey)
 
     while (RegEnumKeyEx(key.GetHKEY(), 0, subKeyName, &subKeyNameSize, NULL, NULL, NULL, &time) == ERROR_SUCCESS)
     {
-        subKeyName[ARRAYSIZE(subKeyName) - 1] = L'\0';
+        subKeyName[ARRAYSIZE(subKeyName)-1] = L'\0';
         res = key.RecurseDeleteKey(subKeyName);
         if (res != ERROR_SUCCESS)
         {
@@ -173,8 +164,7 @@ LONG CRegKey::DeleteValue(_In_ LPCWSTR pwszValue)
 //
 //---------------------------------------------------------------------
 
-LONG CRegKey::QueryStringValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(*pnChars) LPWSTR pwszValue,
-                               _Inout_ ULONG *pnChars)
+LONG CRegKey::QueryStringValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(*pnChars) LPWSTR pwszValue, _Inout_ ULONG *pnChars)
 {
     LONG res = 0;
     DWORD dataType = REG_NONE;
@@ -185,7 +175,7 @@ LONG CRegKey::QueryStringValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(
         return E_INVALIDARG;
     }
 
-    pwszValueSize = (*pnChars) * sizeof(WCHAR);
+    pwszValueSize = (*pnChars)*sizeof(WCHAR);
     *pnChars = 0;
 
     res = RegQueryValueEx(_keyHandle, pwszValueName, NULL, &dataType, (LPBYTE)pwszValue, &pwszValueSize);
@@ -205,18 +195,18 @@ LONG CRegKey::QueryStringValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(
 
 LONG CRegKey::SetStringValue(_In_opt_ LPCWSTR pwszValueName, _In_ LPCWSTR pwszValue, DWORD dwType)
 {
-    size_t lenOfValue = 0;
+	size_t lenOfValue = 0;
     if (pwszValue == nullptr)
     {
         return ERROR_INVALID_PARAMETER;
     }
 
-    if (StringCchLength(pwszValue, STRSAFE_MAX_CCH, &lenOfValue) != S_OK)
+	if (StringCchLength(pwszValue, STRSAFE_MAX_CCH, &lenOfValue) != S_OK)
     {
         return ERROR_INVALID_PARAMETER;
     }
-    DWORD len = static_cast<DWORD>(lenOfValue);
-    return RegSetValueEx(_keyHandle, pwszValueName, NULL, dwType, (LPBYTE)pwszValue, (++len) * sizeof(WCHAR));
+	DWORD len = static_cast<DWORD>(lenOfValue);
+    return RegSetValueEx(_keyHandle, pwszValueName, NULL, dwType, (LPBYTE)pwszValue, (++len)*sizeof(WCHAR));
 }
 
 //---------------------------------------------------------------------
@@ -258,7 +248,7 @@ LONG CRegKey::SetDWORDValue(_In_opt_ LPCWSTR pwszValueName, DWORD dwValue)
 //
 //---------------------------------------------------------------------
 
-LONG CRegKey::QueryBinaryValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(cbData) BYTE *lpData, DWORD cbData)
+LONG CRegKey::QueryBinaryValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(cbData) BYTE* lpData, DWORD cbData)
 {
     LONG res = 0;
     DWORD dataType = REG_NONE;
@@ -282,7 +272,7 @@ LONG CRegKey::QueryBinaryValue(_In_opt_ LPCWSTR pwszValueName, _Out_writes_opt_(
     return ERROR_SUCCESS;
 }
 
-LONG CRegKey::SetBinaryValue(_In_opt_ LPCWSTR pwszValueName, _In_reads_(cbData) BYTE *lpData, DWORD cbData)
+LONG CRegKey::SetBinaryValue(_In_opt_ LPCWSTR pwszValueName, _In_reads_(cbData) BYTE* lpData, DWORD cbData)
 {
     return RegSetValueEx(_keyHandle, pwszValueName, NULL, REG_BINARY, lpData, cbData);
 }

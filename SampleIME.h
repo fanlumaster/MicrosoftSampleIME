@@ -18,17 +18,17 @@ const DWORD WM_CheckGlobalCompartment = WM_USER;
 LRESULT CALLBACK CSampleIME_WindowProc(HWND wndHandle, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 class CSampleIME : public ITfTextInputProcessorEx,
-                   public ITfThreadMgrEventSink,
-                   public ITfTextEditSink,
-                   public ITfKeyEventSink,
-                   public ITfCompositionSink,
-                   public ITfDisplayAttributeProvider,
-                   public ITfActiveLanguageProfileNotifySink,
-                   public ITfThreadFocusSink,
-                   public ITfFunctionProvider,
-                   public ITfFnGetPreferredTouchKeyboardLayout
+    public ITfThreadMgrEventSink,
+    public ITfTextEditSink,
+    public ITfKeyEventSink,
+    public ITfCompositionSink,
+    public ITfDisplayAttributeProvider,
+    public ITfActiveLanguageProfileNotifySink,
+    public ITfThreadFocusSink,
+    public ITfFunctionProvider,
+    public ITfFnGetPreferredTouchKeyboardLayout
 {
-  public:
+public:
     CSampleIME();
     ~CSampleIME();
 
@@ -38,8 +38,7 @@ class CSampleIME : public ITfTextInputProcessorEx,
     STDMETHODIMP_(ULONG) Release(void);
 
     // ITfTextInputProcessor
-    STDMETHODIMP Activate(ITfThreadMgr *pThreadMgr, TfClientId tfClientId)
-    {
+    STDMETHODIMP Activate(ITfThreadMgr *pThreadMgr, TfClientId tfClientId) {
         return ActivateEx(pThreadMgr, tfClientId, 0);
     }
     // ITfTextInputProcessorEx
@@ -54,8 +53,7 @@ class CSampleIME : public ITfTextInputProcessorEx,
     STDMETHODIMP OnPopContext(_In_ ITfContext *pContext);
 
     // ITfTextEditSink
-    STDMETHODIMP OnEndEdit(__RPC__in_opt ITfContext *pContext, TfEditCookie ecReadOnly,
-                           __RPC__in_opt ITfEditRecord *pEditRecord);
+    STDMETHODIMP OnEndEdit(__RPC__in_opt ITfContext *pContext, TfEditCookie ecReadOnly, __RPC__in_opt ITfEditRecord *pEditRecord);
 
     // ITfKeyEventSink
     STDMETHODIMP OnSetFocus(BOOL fForeground);
@@ -70,8 +68,7 @@ class CSampleIME : public ITfTextInputProcessorEx,
 
     // ITfDisplayAttributeProvider
     STDMETHODIMP EnumDisplayAttributeInfo(__RPC__deref_out_opt IEnumTfDisplayAttributeInfo **ppEnum);
-    STDMETHODIMP GetDisplayAttributeInfo(__RPC__in REFGUID guidInfo,
-                                         __RPC__deref_out_opt ITfDisplayAttributeInfo **ppInfo);
+    STDMETHODIMP GetDisplayAttributeInfo(__RPC__in REFGUID guidInfo, __RPC__deref_out_opt ITfDisplayAttributeInfo **ppInfo);
 
     // ITfActiveLanguageProfileNotifySink
     STDMETHODIMP OnActivated(_In_ REFCLSID clsid, _In_ REFGUID guidProfile, _In_ BOOL isActivated);
@@ -95,14 +92,8 @@ class CSampleIME : public ITfTextInputProcessorEx,
     static HRESULT CreateInstance(_In_ IUnknown *pUnkOuter, REFIID riid, _Outptr_ void **ppvObj);
 
     // utility function for thread manager.
-    ITfThreadMgr *_GetThreadMgr()
-    {
-        return _pThreadMgr;
-    }
-    TfClientId _GetClientId()
-    {
-        return _tfClientId;
-    }
+    ITfThreadMgr* _GetThreadMgr() { return _pThreadMgr; }
+    TfClientId _GetClientId() { return _tfClientId; }
 
     // functions for the composition object.
     void _SetComposition(_In_ ITfComposition *pComposition);
@@ -133,37 +124,21 @@ class CSampleIME : public ITfTextInputProcessorEx,
     HRESULT _HandlePhraseArrowKey(TfEditCookie ec, _In_ ITfContext *pContext, _In_ KEYSTROKE_FUNCTION keyFunction);
     HRESULT _HandlePhraseSelectByNumber(TfEditCookie ec, _In_ ITfContext *pContext, _In_ UINT uCode);
 
-    BOOL _IsSecureMode(void)
-    {
-        return (_dwActivateFlags & TF_TMAE_SECUREMODE) ? TRUE : FALSE;
-    }
-    BOOL _IsComLess(void)
-    {
-        return (_dwActivateFlags & TF_TMAE_COMLESS) ? TRUE : FALSE;
-    }
-    BOOL _IsStoreAppMode(void)
-    {
-        return (_dwActivateFlags & TF_TMF_IMMERSIVEMODE) ? TRUE : FALSE;
-    };
+    BOOL _IsSecureMode(void) { return (_dwActivateFlags & TF_TMAE_SECUREMODE) ? TRUE : FALSE; }
+    BOOL _IsComLess(void) { return (_dwActivateFlags & TF_TMAE_COMLESS) ? TRUE : FALSE; }
+    BOOL _IsStoreAppMode(void) { return (_dwActivateFlags & TF_TMF_IMMERSIVEMODE) ? TRUE : FALSE; };
 
-    CCompositionProcessorEngine *GetCompositionProcessorEngine()
-    {
-        return (_pCompositionProcessorEngine);
-    };
+    CCompositionProcessorEngine* GetCompositionProcessorEngine() { return (_pCompositionProcessorEngine); };
 
     // comless helpers
-    static HRESULT CSampleIME::CreateInstance(REFCLSID rclsid, REFIID riid, _Outptr_result_maybenull_ LPVOID *ppv,
-                                              _Out_opt_ HINSTANCE *phInst, BOOL isComLessMode);
-    static HRESULT CSampleIME::ComLessCreateInstance(REFGUID rclsid, REFIID riid, _Outptr_result_maybenull_ void **ppv,
-                                                     _Out_opt_ HINSTANCE *phInst);
-    static HRESULT CSampleIME::GetComModuleName(REFGUID rclsid, _Out_writes_(cchPath) WCHAR *wchPath, DWORD cchPath);
+    static HRESULT CSampleIME::CreateInstance(REFCLSID rclsid, REFIID riid, _Outptr_result_maybenull_ LPVOID* ppv, _Out_opt_ HINSTANCE* phInst, BOOL isComLessMode);
+    static HRESULT CSampleIME::ComLessCreateInstance(REFGUID rclsid, REFIID riid, _Outptr_result_maybenull_ void **ppv, _Out_opt_ HINSTANCE *phInst);
+    static HRESULT CSampleIME::GetComModuleName(REFGUID rclsid, _Out_writes_(cchPath)WCHAR* wchPath, DWORD cchPath);
 
-  private:
+private:
     // functions for the composition object.
-    HRESULT _HandleCompositionInputWorker(_In_ CCompositionProcessorEngine *pCompositionProcessorEngine,
-                                          TfEditCookie ec, _In_ ITfContext *pContext);
-    HRESULT _CreateAndStartCandidate(_In_ CCompositionProcessorEngine *pCompositionProcessorEngine, TfEditCookie ec,
-                                     _In_ ITfContext *pContext);
+    HRESULT _HandleCompositionInputWorker(_In_ CCompositionProcessorEngine *pCompositionProcessorEngine, TfEditCookie ec, _In_ ITfContext *pContext);
+    HRESULT _CreateAndStartCandidate(_In_ CCompositionProcessorEngine *pCompositionProcessorEngine, TfEditCookie ec, _In_ ITfContext *pContext);
     HRESULT _HandleCandidateWorker(TfEditCookie ec, _In_ ITfContext *pContext);
 
     void _StartComposition(_In_ ITfContext *pContext);
@@ -174,12 +149,9 @@ class CSampleIME : public ITfTextInputProcessorEx,
     HRESULT _AddComposingAndChar(TfEditCookie ec, _In_ ITfContext *pContext, _In_ CStringRange *pstrAddString);
     HRESULT _AddCharAndFinalize(TfEditCookie ec, _In_ ITfContext *pContext, _In_ CStringRange *pstrAddString);
 
-    BOOL _FindComposingRange(TfEditCookie ec, _In_ ITfContext *pContext, _In_ ITfRange *pSelection,
-                             _Outptr_result_maybenull_ ITfRange **ppRange);
-    HRESULT _SetInputString(TfEditCookie ec, _In_ ITfContext *pContext, _Out_opt_ ITfRange *pRange,
-                            _In_ CStringRange *pstrAddString, BOOL exist_composing);
-    HRESULT _InsertAtSelection(TfEditCookie ec, _In_ ITfContext *pContext, _In_ CStringRange *pstrAddString,
-                               _Outptr_ ITfRange **ppCompRange);
+    BOOL _FindComposingRange(TfEditCookie ec, _In_ ITfContext *pContext, _In_ ITfRange *pSelection, _Outptr_result_maybenull_ ITfRange **ppRange);
+    HRESULT _SetInputString(TfEditCookie ec, _In_ ITfContext *pContext, _Out_opt_ ITfRange *pRange, _In_ CStringRange *pstrAddString, BOOL exist_composing);
+    HRESULT _InsertAtSelection(TfEditCookie ec, _In_ ITfContext *pContext, _In_ CStringRange *pstrAddString, _Outptr_ ITfRange **ppCompRange);
 
     HRESULT _RemoveDummyCompositionForComposing(TfEditCookie ec, _In_ ITfComposition *pComposition);
 
@@ -207,8 +179,7 @@ class CSampleIME : public ITfTextInputProcessorEx,
     BOOL _InitActiveLanguageProfileNotifySink();
     void _UninitActiveLanguageProfileNotifySink();
 
-    BOOL _IsKeyEaten(_In_ ITfContext *pContext, UINT codeIn, _Out_ UINT *pCodeOut, _Out_writes_(1) WCHAR *pwch,
-                     _Out_opt_ _KEYSTROKE_STATE *pKeyState);
+    BOOL _IsKeyEaten(_In_ ITfContext *pContext, UINT codeIn, _Out_ UINT *pCodeOut, _Out_writes_(1) WCHAR *pwch, _Out_opt_ _KEYSTROKE_STATE *pKeyState);
 
     BOOL _IsRangeCovered(TfEditCookie ec, _In_ ITfRange *pRangeTest, _In_ ITfRange *pRangeCover);
     VOID _DeleteCandidateList(BOOL fForce, _In_opt_ ITfContext *pContext);
@@ -227,15 +198,15 @@ class CSampleIME : public ITfTextInputProcessorEx,
 
     friend LRESULT CALLBACK CSampleIME_WindowProc(HWND wndHandle, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-  private:
-    ITfThreadMgr *_pThreadMgr;
+private:
+    ITfThreadMgr* _pThreadMgr;
     TfClientId _tfClientId;
     DWORD _dwActivateFlags;
 
     // The cookie of ThreadMgrEventSink
     DWORD _threadMgrEventSinkCookie;
 
-    ITfContext *_pTextEditSinkContext;
+    ITfContext* _pTextEditSinkContext;
     DWORD _textEditSinkCookie;
 
     // The cookie of ActiveLanguageProfileNotifySink
@@ -245,13 +216,13 @@ class CSampleIME : public ITfTextInputProcessorEx,
     DWORD _dwThreadFocusSinkCookie;
 
     // Composition Processor Engine object.
-    CCompositionProcessorEngine *_pCompositionProcessorEngine;
+    CCompositionProcessorEngine* _pCompositionProcessorEngine;
 
     // Language bar item object.
-    CLangBarItemButton *_pLangBarItem;
+    CLangBarItemButton* _pLangBarItem;
 
     // the current composition object.
-    ITfComposition *_pComposition;
+    ITfComposition* _pComposition;
 
     // guidatom for the display attibute.
     TfGuidAtom _gaDisplayAttributeInput;
@@ -261,17 +232,17 @@ class CSampleIME : public ITfTextInputProcessorEx,
     CCandidateListUIPresenter *_pCandidateListUIPresenter;
     BOOL _isCandidateWithWildcard : 1;
 
-    ITfDocumentMgr *_pDocMgrLastFocused;
+    ITfDocumentMgr* _pDocMgrLastFocused;
 
-    ITfContext *_pContext;
+    ITfContext* _pContext;
 
-    ITfCompartment *_pSIPIMEOnOffCompartment;
+    ITfCompartment* _pSIPIMEOnOffCompartment;
     DWORD _dwSIPIMEOnOffCompartmentSinkCookie;
 
-    HWND _msgWndHandle;
+    HWND _msgWndHandle; 
 
     LONG _refCount;
 
     // Support the search integration
-    ITfFnSearchCandidateProvider *_pITfFnSearchCandidateProvider;
+    ITfFnSearchCandidateProvider* _pITfFnSearchCandidateProvider;
 };

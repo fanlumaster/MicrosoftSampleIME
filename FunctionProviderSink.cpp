@@ -17,17 +17,16 @@
 
 BOOL CSampleIME::_InitFunctionProviderSink()
 {
-    ITfSourceSingle *pSourceSingle = nullptr;
+    ITfSourceSingle* pSourceSingle = nullptr;
     BOOL ret = FALSE;
     if (SUCCEEDED(_pThreadMgr->QueryInterface(IID_ITfSourceSingle, (void **)&pSourceSingle)))
     {
-        IUnknown *punk = nullptr;
+        IUnknown* punk = nullptr;
         if (SUCCEEDED(QueryInterface(IID_IUnknown, (void **)&punk)))
         {
             if (SUCCEEDED(pSourceSingle->AdviseSingleSink(_tfClientId, IID_ITfFunctionProvider, punk)))
             {
-                if (SUCCEEDED(CSearchCandidateProvider::CreateInstance(&_pITfFnSearchCandidateProvider,
-                                                                       (ITfTextInputProcessorEx *)this)))
+                if (SUCCEEDED(CSearchCandidateProvider::CreateInstance(&_pITfFnSearchCandidateProvider, (ITfTextInputProcessorEx*)this)))
                 {
                     ret = TRUE;
                 }
@@ -47,7 +46,7 @@ BOOL CSampleIME::_InitFunctionProviderSink()
 
 void CSampleIME::_UninitFunctionProviderSink()
 {
-    ITfSourceSingle *pSourceSingle = nullptr;
+    ITfSourceSingle* pSourceSingle = nullptr;
     if (SUCCEEDED(_pThreadMgr->QueryInterface(IID_ITfSourceSingle, (void **)&pSourceSingle)))
     {
         pSourceSingle->UnadviseSingleSink(_tfClientId, IID_ITfFunctionProvider);

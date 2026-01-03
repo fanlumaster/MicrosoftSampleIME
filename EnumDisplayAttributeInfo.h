@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include "Private.h"
-
 //+---------------------------------------------------------------------------
 //
 // CEnumDisplayAttributeInfo
@@ -17,7 +15,7 @@
 
 class CEnumDisplayAttributeInfo : public IEnumTfDisplayAttributeInfo
 {
-  public:
+public:
     CEnumDisplayAttributeInfo();
     ~CEnumDisplayAttributeInfo();
 
@@ -28,12 +26,11 @@ class CEnumDisplayAttributeInfo : public IEnumTfDisplayAttributeInfo
 
     // IEnumTfDisplayAttributeInfo
     STDMETHODIMP Clone(_Out_ IEnumTfDisplayAttributeInfo **ppEnum);
-    STDMETHODIMP Next(ULONG ulCount, __RPC__out_ecount_part(ulCount, *pcFetched) ITfDisplayAttributeInfo **rgInfo,
-                      __RPC__out ULONG *pcFetched);
+    STDMETHODIMP Next(ULONG ulCount, __RPC__out_ecount_part(ulCount, *pcFetched) ITfDisplayAttributeInfo **rgInfo, __RPC__out ULONG *pcFetched);
     STDMETHODIMP Reset();
     STDMETHODIMP Skip(ULONG ulCount);
 
-  private:
+private:
     LONG _index;    // next display attribute to enum
     LONG _refCount; // COM ref count
 };

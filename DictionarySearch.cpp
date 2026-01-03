@@ -15,8 +15,7 @@
 //
 //----------------------------------------------------------------------------
 
-CDictionarySearch::CDictionarySearch(LCID locale, _In_ CFile *pFile, _In_ CStringRange *pSearchKeyCode)
-    : CDictionaryParser(locale)
+CDictionarySearch::CDictionarySearch(LCID locale, _In_ CFile *pFile, _In_ CStringRange *pSearchKeyCode) : CDictionaryParser(locale)
 {
     _pFile = pFile;
     _pSearchKeyCode = pSearchKeyCode;
@@ -74,14 +73,14 @@ BOOL CDictionarySearch::FindConvertedStringForWildcard(CDictionaryResult **ppdre
 
 BOOL CDictionarySearch::FindWorker(BOOL isTextSearch, _Out_ CDictionaryResult **ppdret, BOOL isWildcardSearch)
 {
-    DWORD_PTR dwTotalBufLen = GetBufferInWCharLength(); // in char
+    DWORD_PTR dwTotalBufLen = GetBufferInWCharLength();        // in char
     if (dwTotalBufLen == 0)
     {
         return FALSE;
     }
 
     const WCHAR *pwch = GetBufferInWChar();
-    DWORD_PTR indexTrace = 0; // in char
+    DWORD_PTR indexTrace = 0;     // in char
     *ppdret = nullptr;
     BOOL isFound = FALSE;
     DWORD_PTR bufLenOneLine = 0;
@@ -100,7 +99,7 @@ TryAgain:
 
         if (!ParseLine(&pwch[indexTrace], bufLenOneLine, &keyword))
         {
-            return FALSE; // error
+            return FALSE;    // error
         }
 
         if (!isTextSearch)
@@ -112,7 +111,7 @@ TryAgain:
                 {
                     if (bufLen)
                     {
-                        delete[] pText;
+                        delete [] pText;
                     }
                     goto FindNextLine;
                 }
@@ -124,7 +123,7 @@ TryAgain:
                 {
                     if (bufLen)
                     {
-                        delete[] pText;
+                        delete [] pText;
                     }
                     goto FindNextLine;
                 }
@@ -138,13 +137,13 @@ TryAgain:
             {
                 if (bufLen)
                 {
-                    delete[] pText;
+                    delete [] pText;
                 }
                 return FALSE;
             }
             if (convertedStrings.Count() == 1)
             {
-                CStringRange *pTempString = convertedStrings.GetAt(0);
+                CStringRange* pTempString = convertedStrings.GetAt(0);
 
                 if (!isWildcardSearch)
                 {
@@ -152,7 +151,7 @@ TryAgain:
                     {
                         if (bufLen)
                         {
-                            delete[] pText;
+                            delete [] pText;
                         }
                         goto FindNextLine;
                     }
@@ -164,7 +163,7 @@ TryAgain:
                     {
                         if (bufLen)
                         {
-                            delete[] pText;
+                            delete [] pText;
                         }
                         goto FindNextLine;
                     }
@@ -174,7 +173,7 @@ TryAgain:
             {
                 if (bufLen)
                 {
-                    delete[] pText;
+                    delete [] pText;
                 }
                 goto FindNextLine;
             }
@@ -182,7 +181,7 @@ TryAgain:
 
         if (bufLen)
         {
-            delete[] pText;
+            delete [] pText;
         }
 
         // Prepare return's CDictionaryResult
@@ -208,7 +207,7 @@ TryAgain:
 
         for (UINT i = 0; i < valueStrings.Count(); i++)
         {
-            CStringRange *findPhrase = (*ppdret)->_FindPhraseList.Append();
+            CStringRange* findPhrase = (*ppdret)->_FindPhraseList.Append();
             if (findPhrase)
             {
                 *findPhrase = *valueStrings.GetAt(i);
@@ -231,7 +230,7 @@ FindNextLine:
             delete *ppdret;
             *ppdret = nullptr;
         }
-        return (isFound ? TRUE : FALSE); // End of file
+        return (isFound ? TRUE : FALSE);        // End of file
     }
 
     indexTrace += bufLenOneLine;

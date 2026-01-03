@@ -5,10 +5,8 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved
 
-#pragma once
 
-#include "Private.h"
-#include "globals.h"
+#pragma once
 
 //+---------------------------------------------------------------------------
 //
@@ -18,7 +16,7 @@
 
 class CDisplayAttributeInfo : public ITfDisplayAttributeInfo
 {
-  public:
+public:
     CDisplayAttributeInfo();
     ~CDisplayAttributeInfo();
 
@@ -34,13 +32,13 @@ class CDisplayAttributeInfo : public ITfDisplayAttributeInfo
     STDMETHODIMP SetAttributeInfo(_In_ const TF_DISPLAYATTRIBUTE *ptfDisplayAttr);
     STDMETHODIMP Reset();
 
-  protected:
-    const GUID *_pguid;
-    const TF_DISPLAYATTRIBUTE *_pDisplayAttribute;
-    const WCHAR *_pDescription;
-    const WCHAR *_pValueName;
+protected:
+    const GUID* _pguid;
+    const TF_DISPLAYATTRIBUTE* _pDisplayAttribute;
+    const WCHAR* _pDescription;
+    const WCHAR* _pValueName;
 
-  private:
+private:
     LONG _refCount; // COM ref count
 };
 
@@ -52,7 +50,7 @@ class CDisplayAttributeInfo : public ITfDisplayAttributeInfo
 
 class CDisplayAttributeInfoInput : public CDisplayAttributeInfo
 {
-  public:
+public:
     CDisplayAttributeInfoInput()
     {
         _pguid = &Global::SampleIMEGuidDisplayAttributeInput;
@@ -74,7 +72,7 @@ class CDisplayAttributeInfoInput : public CDisplayAttributeInfo
 
 class CDisplayAttributeInfoConverted : public CDisplayAttributeInfo
 {
-  public:
+public:
     CDisplayAttributeInfoConverted()
     {
         _pguid = &Global::SampleIMEGuidDisplayAttributeConverted;

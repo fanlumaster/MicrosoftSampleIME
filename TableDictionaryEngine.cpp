@@ -15,17 +15,16 @@
 //
 //----------------------------------------------------------------------------
 
-VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode,
-                                         _Inout_ CSampleImeArray<CStringRange> *pWordStrings)
+VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode, _Inout_ CSampleImeArray<CStringRange> *pWordStrings)
 {
-    CDictionaryResult *pdret = nullptr;
+    CDictionaryResult* pdret = nullptr;
     CDictionarySearch dshSearch(_locale, _pDictionaryFile, pKeyCode);
 
     while (dshSearch.FindPhrase(&pdret))
     {
         for (UINT index = 0; index < pdret->_FindPhraseList.Count(); index++)
         {
-            CStringRange *pPhrase = nullptr;
+            CStringRange* pPhrase = nullptr;
             pPhrase = pWordStrings->Append();
             if (pPhrase)
             {
@@ -38,17 +37,16 @@ VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode,
     }
 }
 
-VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode,
-                                         _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
+VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode, _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
 {
-    CDictionaryResult *pdret = nullptr;
+    CDictionaryResult* pdret = nullptr;
     CDictionarySearch dshSearch(_locale, _pDictionaryFile, pKeyCode);
 
     while (dshSearch.FindPhrase(&pdret))
     {
         for (UINT iIndex = 0; iIndex < pdret->_FindPhraseList.Count(); iIndex++)
         {
-            CCandidateListItem *pLI = nullptr;
+            CCandidateListItem* pLI = nullptr;
             pLI = pItemList->Append();
             if (pLI)
             {
@@ -68,17 +66,16 @@ VOID CTableDictionaryEngine::CollectWord(_In_ CStringRange *pKeyCode,
 //
 //----------------------------------------------------------------------------
 
-VOID CTableDictionaryEngine::CollectWordForWildcard(_In_ CStringRange *pKeyCode,
-                                                    _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
+VOID CTableDictionaryEngine::CollectWordForWildcard(_In_ CStringRange *pKeyCode, _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
 {
-    CDictionaryResult *pdret = nullptr;
+    CDictionaryResult* pdret = nullptr;
     CDictionarySearch dshSearch(_locale, _pDictionaryFile, pKeyCode);
 
     while (dshSearch.FindPhraseForWildcard(&pdret))
     {
         for (UINT iIndex = 0; iIndex < pdret->_FindPhraseList.Count(); iIndex++)
         {
-            CCandidateListItem *pLI = nullptr;
+            CCandidateListItem* pLI = nullptr;
             pLI = pItemList->Append();
             if (pLI)
             {
@@ -98,17 +95,16 @@ VOID CTableDictionaryEngine::CollectWordForWildcard(_In_ CStringRange *pKeyCode,
 //
 //----------------------------------------------------------------------------
 
-VOID CTableDictionaryEngine::CollectWordFromConvertedStringForWildcard(
-    _In_ CStringRange *pString, _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
+VOID CTableDictionaryEngine::CollectWordFromConvertedStringForWildcard(_In_ CStringRange *pString, _Inout_ CSampleImeArray<CCandidateListItem> *pItemList)
 {
-    CDictionaryResult *pdret = nullptr;
+    CDictionaryResult* pdret = nullptr;
     CDictionarySearch dshSearch(_locale, _pDictionaryFile, pString);
 
     while (dshSearch.FindConvertedStringForWildcard(&pdret)) // TAIL ALL CHAR MATCH
     {
         for (UINT index = 0; index < pdret->_FindPhraseList.Count(); index++)
         {
-            CCandidateListItem *pLI = nullptr;
+            CCandidateListItem* pLI = nullptr;
             pLI = pItemList->Append();
             if (pLI)
             {
@@ -121,3 +117,4 @@ VOID CTableDictionaryEngine::CollectWordFromConvertedStringForWildcard(
         pdret = nullptr;
     }
 }
+

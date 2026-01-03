@@ -49,7 +49,8 @@ STDAPI CEnumDisplayAttributeInfo::QueryInterface(REFIID riid, _Outptr_ void **pp
 
     *ppvObj = nullptr;
 
-    if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IEnumTfDisplayAttributeInfo))
+    if (IsEqualIID(riid, IID_IUnknown) ||
+        IsEqualIID(riid, IID_IEnumTfDisplayAttributeInfo))
     {
         *ppvObj = (IEnumTfDisplayAttributeInfo *)this;
     }
@@ -62,6 +63,7 @@ STDAPI CEnumDisplayAttributeInfo::QueryInterface(REFIID riid, _Outptr_ void **pp
 
     return E_NOINTERFACE;
 }
+
 
 //+---------------------------------------------------------------------------
 //
@@ -103,7 +105,7 @@ STDAPI_(ULONG) CEnumDisplayAttributeInfo::Release()
 
 STDAPI CEnumDisplayAttributeInfo::Clone(_Out_ IEnumTfDisplayAttributeInfo **ppEnum)
 {
-    CEnumDisplayAttributeInfo *pClone = nullptr;
+    CEnumDisplayAttributeInfo* pClone = nullptr;
 
     if (ppEnum == nullptr)
     {
@@ -135,9 +137,7 @@ STDAPI CEnumDisplayAttributeInfo::Clone(_Out_ IEnumTfDisplayAttributeInfo **ppEn
 
 const int MAX_DISPLAY_ATTRIBUTE_INFO = 2;
 
-STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount,
-                                       __RPC__out_ecount_part(ulCount, *pcFetched) ITfDisplayAttributeInfo **rgInfo,
-                                       __RPC__out ULONG *pcFetched)
+STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount, __RPC__out_ecount_part(ulCount, *pcFetched) ITfDisplayAttributeInfo **rgInfo, __RPC__out ULONG *pcFetched)
 {
     ULONG fetched;
 
@@ -155,10 +155,10 @@ STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount,
 
     while (fetched < ulCount)
     {
-        ITfDisplayAttributeInfo *pDisplayAttributeInfo = nullptr;
+        ITfDisplayAttributeInfo* pDisplayAttributeInfo = nullptr;
 
         if (_index == 0)
-        {
+        {   
             pDisplayAttributeInfo = new (std::nothrow) CDisplayAttributeInfoInput();
             if ((pDisplayAttributeInfo) == nullptr)
             {
@@ -172,6 +172,7 @@ STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount,
             {
                 return E_OUTOFMEMORY;
             }
+
         }
         else
         {

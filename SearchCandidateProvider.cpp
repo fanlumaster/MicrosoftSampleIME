@@ -18,9 +18,8 @@
 create instance of CSearchCandidateProvider
 
 ------------------------------------------------------------------------------*/
-HRESULT CSearchCandidateProvider::CreateInstance(_Outptr_ ITfFnSearchCandidateProvider **ppobj,
-                                                 _In_ ITfTextInputProcessorEx *ptip)
-{
+HRESULT CSearchCandidateProvider::CreateInstance(_Outptr_ ITfFnSearchCandidateProvider **ppobj, _In_ ITfTextInputProcessorEx *ptip)
+{  
     if (ppobj == nullptr)
     {
         return E_INVALIDARG;
@@ -41,9 +40,8 @@ HRESULT CSearchCandidateProvider::CreateInstance(_Outptr_ ITfFnSearchCandidatePr
 create instance of CSearchCandidateProvider
 
 ------------------------------------------------------------------------------*/
-HRESULT CSearchCandidateProvider::CreateInstance(REFIID riid, _Outptr_ void **ppvObj,
-                                                 _In_ ITfTextInputProcessorEx *ptip)
-{
+HRESULT CSearchCandidateProvider::CreateInstance(REFIID riid, _Outptr_ void **ppvObj, _In_ ITfTextInputProcessorEx *ptip)
+{ 
     if (ppvObj == nullptr)
     {
         return E_INVALIDARG;
@@ -56,7 +54,7 @@ HRESULT CSearchCandidateProvider::CreateInstance(REFIID riid, _Outptr_ void **pp
         return E_OUTOFMEMORY;
     }
 
-    return ((CSearchCandidateProvider *)(*ppvObj))->QueryInterface(riid, ppvObj);
+    return ((CSearchCandidateProvider*)(*ppvObj))->QueryInterface(riid, ppvObj);
 }
 
 /*------------------------------------------------------------------------------
@@ -78,7 +76,7 @@ destructor of CSearchCandidateProvider
 
 ------------------------------------------------------------------------------*/
 CSearchCandidateProvider::~CSearchCandidateProvider(void)
-{
+{  
 }
 
 /*------------------------------------------------------------------------------
@@ -97,11 +95,11 @@ STDMETHODIMP CSearchCandidateProvider::QueryInterface(REFIID riid, _Outptr_ void
 
     if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, __uuidof(ITfFnSearchCandidateProvider)))
     {
-        *ppvObj = (ITfFnSearchCandidateProvider *)this;
+        *ppvObj = (ITfFnSearchCandidateProvider*)this;
     }
     else if (IsEqualIID(riid, IID_ITfFunction))
     {
-        *ppvObj = (ITfFunction *)this;
+        *ppvObj = (ITfFunction*)this;
     }
 
     if (*ppvObj == nullptr)
@@ -150,14 +148,12 @@ STDMETHODIMP CSearchCandidateProvider::GetDisplayName(_Out_ BSTR *pbstrName)
     }
 
     *pbstrName = SysAllocString(L"SearchCandidateProvider");
-    return S_OK;
+    return  S_OK;
 }
 
-STDMETHODIMP CSearchCandidateProvider::GetSearchCandidates(BSTR bstrQuery, BSTR bstrApplicationID,
-                                                           _Outptr_result_maybenull_ ITfCandidateList **pplist)
+STDMETHODIMP CSearchCandidateProvider::GetSearchCandidates(BSTR bstrQuery, BSTR bstrApplicationID, _Outptr_result_maybenull_ ITfCandidateList **pplist)
 {
-    bstrApplicationID;
-    bstrQuery;
+	bstrApplicationID;bstrQuery;
     HRESULT hr = E_FAIL;
     *pplist = nullptr;
 
@@ -166,7 +162,7 @@ STDMETHODIMP CSearchCandidateProvider::GetSearchCandidates(BSTR bstrQuery, BSTR 
         return hr;
     }
 
-    CCompositionProcessorEngine *pCompositionProcessorEngine = ((CSampleIME *)_pTip)->GetCompositionProcessorEngine();
+    CCompositionProcessorEngine* pCompositionProcessorEngine = ((CSampleIME*)_pTip)->GetCompositionProcessorEngine();
     if (nullptr == pCompositionProcessorEngine)
     {
         return hr;
@@ -179,21 +175,19 @@ STDMETHODIMP CSearchCandidateProvider::GetSearchCandidates(BSTR bstrQuery, BSTR 
     if (0 < cCand)
     {
         hr = CTipCandidateList::CreateInstance(pplist, cCand);
-        if (FAILED(hr))
-        {
-            return hr;
-        }
+		if (FAILED(hr))
+		{
+			return hr;
+		}
         for (int iCand = 0; iCand < cCand; iCand++)
         {
-            ITfCandidateString *pCandStr = nullptr;
-            CTipCandidateString::CreateInstance(IID_ITfCandidateString, (void **)&pCandStr);
+            ITfCandidateString* pCandStr = nullptr;
+            CTipCandidateString::CreateInstance(IID_ITfCandidateString, (void**)&pCandStr);
 
-            ((CTipCandidateString *)pCandStr)->SetIndex(iCand);
-            ((CTipCandidateString *)pCandStr)
-                ->SetString(candidateList.GetAt(iCand)->_ItemString.Get(),
-                            candidateList.GetAt(iCand)->_ItemString.GetLength());
+            ((CTipCandidateString*)pCandStr)->SetIndex(iCand);
+            ((CTipCandidateString*)pCandStr)->SetString(candidateList.GetAt(iCand)->_ItemString.Get(), candidateList.GetAt(iCand)->_ItemString.GetLength());
 
-            ((CTipCandidateList *)(*pplist))->SetCandidate(&pCandStr);
+            ((CTipCandidateList*)(*pplist))->SetCandidate(&pCandStr);
         }
     }
     hr = S_OK;
@@ -209,9 +203,8 @@ set result
 ------------------------------------------------------------------------------*/
 STDMETHODIMP CSearchCandidateProvider::SetResult(BSTR bstrQuery, BSTR bstrApplicationID, BSTR bstrResult)
 {
-    bstrQuery;
-    bstrApplicationID;
-    bstrResult;
+    bstrQuery;bstrApplicationID;bstrResult;
 
     return E_NOTIMPL;
 }
+

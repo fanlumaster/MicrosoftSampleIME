@@ -7,11 +7,9 @@
 
 #pragma once
 
-#include "Private.h"
-
 class CTfInputProcessorProfile
 {
-  public:
+public:
     CTfInputProcessorProfile();
     ~CTfInputProcessorProfile();
 
@@ -19,6 +17,6 @@ class CTfInputProcessorProfile
     HRESULT GetCurrentLanguage(_Out_ LANGID *plangid);
     HRESULT GetDefaultLanguageProfile(LANGID langid, REFGUID catid, _Out_ CLSID *pclsid, _Out_ GUID *pguidProfile);
 
-  private:
-    ITfInputProcessorProfiles *_pInputProcessorProfile;
+private:
+    ITfInputProcessorProfiles* _pInputProcessorProfile;
 };

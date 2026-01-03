@@ -5,15 +5,14 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved
 
+
 #pragma once
 
-#include "Private.h"
-#include "SampleIME.h"
-#include "CandidateWindow.h"
-#include "CompositionProcessorEngine.h"
-#include "SampleIMEBaseStructure.h"
 #include "KeyHandlerEditSession.h"
+#include "CandidateWindow.h"
 #include "TfTextLayoutSink.h"
+#include "SampleIME.h"
+#include "SampleIMEBaseStructure.h"
 
 class CReadingLine;
 
@@ -21,19 +20,21 @@ class CReadingLine;
 //
 // CCandidateListUIPresenter
 //
-// ITfCandidateListUIElement / ITfIntegratableCandidateListUIElement is used for
+// ITfCandidateListUIElement / ITfIntegratableCandidateListUIElement is used for 
 // UILess mode support
-// ITfCandidateListUIElementBehavior sends the Selection behavior message to
+// ITfCandidateListUIElementBehavior sends the Selection behavior message to 
 // 3rd party IME.
 //----------------------------------------------------------------------------
 
 class CCandidateListUIPresenter : public CTfTextLayoutSink,
-                                  public ITfCandidateListUIElementBehavior,
-                                  public ITfIntegratableCandidateListUIElement
+    public ITfCandidateListUIElementBehavior,
+    public ITfIntegratableCandidateListUIElement
 {
-  public:
-    CCandidateListUIPresenter(_In_ CSampleIME *pTextService, ATOM atom, KEYSTROKE_CATEGORY Category,
-                              _In_ CCandidateRange *pIndexRange, BOOL hideWindow);
+public:
+    CCandidateListUIPresenter(_In_ CSampleIME *pTextService, ATOM atom,
+        KEYSTROKE_CATEGORY Category,
+        _In_ CCandidateRange *pIndexRange,
+        BOOL hideWindow);
     virtual ~CCandidateListUIPresenter();
 
     // IUnknown
@@ -66,12 +67,10 @@ class CCandidateListUIPresenter : public CTfTextLayoutSink,
     STDMETHODIMP SetIntegrationStyle(GUID guidIntegrationStyle);
     STDMETHODIMP GetSelectionStyle(_Out_ TfIntegratableCandidateListSelectionStyle *ptfSelectionStyle);
     STDMETHODIMP OnKeyDown(_In_ WPARAM wParam, _In_ LPARAM lParam, _Out_ BOOL *pIsEaten);
-    STDMETHODIMP ShowCandidateNumbers(_Out_ BOOL *pIsShow);
+    STDMETHODIMP ShowCandidateNumbers(_Out_ BOOL *pIsShow); 
     STDMETHODIMP FinalizeExactCompositionString();
 
-    virtual HRESULT _StartCandidateList(TfClientId tfClientId, _In_ ITfDocumentMgr *pDocumentMgr,
-                                        _In_ ITfContext *pContextDocument, TfEditCookie ec,
-                                        _In_ ITfRange *pRangeComposition, UINT wndWidth);
+    virtual HRESULT _StartCandidateList(TfClientId tfClientId, _In_ ITfDocumentMgr *pDocumentMgr, _In_ ITfContext *pContextDocument, TfEditCookie ec, _In_ ITfRange *pRangeComposition, UINT wndWidth);
     void _EndCandidateList();
 
     void _SetText(_In_ CSampleImeArray<CCandidateListItem> *pCandidateList, BOOL isAddFindKeyCode);
@@ -80,10 +79,7 @@ class CCandidateListUIPresenter : public CTfTextLayoutSink,
     VOID _SetFillColor(HBRUSH hBrush);
 
     DWORD_PTR _GetSelectedCandidateString(_Outptr_result_maybenull_ const WCHAR **ppwchCandidateString);
-    BOOL _SetSelectionInPage(int nPos)
-    {
-        return _pCandidateWnd->_SetSelectionInPage(nPos);
-    }
+    BOOL _SetSelectionInPage(int nPos) { return _pCandidateWnd->_SetSelectionInPage(nPos); }
 
     BOOL _MoveSelection(_In_ int offSet);
     BOOL _SetSelection(_In_ int selectedIndex);
@@ -99,11 +95,10 @@ class CCandidateListUIPresenter : public CTfTextLayoutSink,
     virtual HRESULT OnSetThreadFocus();
     virtual HRESULT OnKillThreadFocus();
 
-    void RemoveSpecificCandidateFromList(_In_ LCID Locale, _Inout_ CSampleImeArray<CCandidateListItem> &candidateList,
-                                         _In_ CStringRange &srgCandidateString);
+    void RemoveSpecificCandidateFromList(_In_ LCID Locale, _Inout_ CSampleImeArray<CCandidateListItem> &candidateList, _In_ CStringRange &srgCandidateString);
     void AdviseUIChangedByArrowKey(_In_ KEYSTROKE_FUNCTION arrowKey);
 
-  private:
+private:
     virtual HRESULT CALLBACK _CandidateChangeNotification(_In_ enum CANDWND_ACTION action);
 
     static HRESULT _CandWndCallback(_In_ void *pv, _In_ enum CANDWND_ACTION action);
@@ -126,18 +121,19 @@ class CCandidateListUIPresenter : public CTfTextLayoutSink,
 
     void SetPageIndexWithScrollInfo(_In_ CSampleImeArray<CCandidateListItem> *pCandidateList);
 
-  protected:
+protected:
     CCandidateWindow *_pCandidateWnd;
     BOOL _isShowMode;
     BOOL _hideWindow;
 
-  private:
+private:
+
     HWND _parentWndHandle;
     ATOM _atom;
-    CCandidateRange *_pIndexRange;
+    CCandidateRange* _pIndexRange;
     KEYSTROKE_CATEGORY _Category;
     DWORD _updatedFlags;
     DWORD _uiElementId;
-    CSampleIME *_pTextService;
+    CSampleIME* _pTextService;
     LONG _refCount;
 };

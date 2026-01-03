@@ -5,15 +5,14 @@
 //
 // Copyright (c) Microsoft Corporation. All rights reserved
 
-#pragma once
 
-#include "Private.h"
+#pragma once
 
 class CSampleIME;
 
 class CEditSessionBase : public ITfEditSession
 {
-  public:
+public:
     CEditSessionBase(_In_ CSampleIME *pTextService, _In_ ITfContext *pContext);
     virtual ~CEditSessionBase();
 
@@ -25,10 +24,10 @@ class CEditSessionBase : public ITfEditSession
     // ITfEditSession
     virtual STDMETHODIMP DoEditSession(TfEditCookie ec) = 0;
 
-  protected:
+protected:
     ITfContext *_pContext;
     CSampleIME *_pTextService;
 
-  private:
-    LONG _refCount; // COM ref count
+private:
+    LONG _refCount;     // COM ref count
 };

@@ -12,29 +12,28 @@
 
 #include <vector>
 
-template <class T> class CSampleIMEStructureArray
+template<class T>
+class CSampleIMEStructureArray
 {
-    typedef typename std::vector<T> value_type;
-    typedef const T &CONST_REF;
-    typedef typename value_type CSampleIMEArray;
-    typedef typename value_type::iterator CSampleIMEIter;
+    typedef typename    std::vector<T>         value_type;
+    typedef const       T&                     CONST_REF;
+    typedef typename    value_type             CSampleIMEArray;
+    typedef typename    value_type::iterator   CSampleIMEIter;
 
-  public:
-    CSampleIMEStructureArray() : _imeVector()
+public:
+    CSampleIMEStructureArray(): _imeVector()
     {
     }
 
-    explicit CSampleIMEStructureArray(size_t iCount) : _imeVector(iCount)
+    explicit CSampleIMEStructureArray(size_t iCount): _imeVector(iCount)
     {
     }
 
-    CSampleIMEStructureArray(size_t iCount, CONST_REF tVal) : _imeVector(iCount, tVal)
+    CSampleIMEStructureArray(size_t iCount, CONST_REF tVal): _imeVector(iCount, tVal)
     {
     }
 
-    virtual ~CSampleIMEStructureArray()
-    {
-    }
+    virtual ~CSampleIMEStructureArray() {}
 
     inline CONST_REF GetAt(size_t iIndex) const
     {
@@ -44,7 +43,7 @@ template <class T> class CSampleIMEStructureArray
         return _imeVector[iIndex];
     }
 
-    inline T &GetAt(size_t iIndex)
+    inline T& GetAt(size_t iIndex)
     {
         assert(iIndex <= _imeVector.size());
         assert(_imeVector.size() > 0);
@@ -63,12 +62,9 @@ template <class T> class CSampleIMEStructureArray
         _imeVector.erase(beginIter, lastIter);
     }
 
-    size_t Count() const
-    {
-        return _imeVector.size();
-    }
+    size_t Count() const { return _imeVector.size(); }
 
-    void Append(const T &tVal)
+    void Append(const T& tVal)
     {
         _imeVector.push_back(tVal);
     }
@@ -78,7 +74,7 @@ template <class T> class CSampleIMEStructureArray
         _imeVector.clear();
     }
 
-  private:
-    CSampleIMEArray _imeVector; // the actual array of data
-    CSampleIMEIter _imeIter;
+private:
+    CSampleIMEArray _imeVector;   // the actual array of data
+    CSampleIMEIter  _imeIter;
 };

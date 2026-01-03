@@ -26,9 +26,8 @@
 
 class CEndCompositionEditSession : public CEditSessionBase
 {
-  public:
-    CEndCompositionEditSession(_In_ CSampleIME *pTextService, _In_ ITfContext *pContext)
-        : CEditSessionBase(pTextService, pContext)
+public:
+    CEndCompositionEditSession(_In_ CSampleIME *pTextService, _In_ ITfContext *pContext) : CEditSessionBase(pTextService, pContext)
     {
     }
 
@@ -38,6 +37,7 @@ class CEndCompositionEditSession : public CEditSessionBase
         _pTextService->_TerminateComposition(ec, _pContext, TRUE);
         return S_OK;
     }
+
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ class CEndCompositionEditSession : public CEditSessionBase
 
 void CSampleIME::_TerminateComposition(TfEditCookie ec, _In_ ITfContext *pContext, BOOL isCalledFromDeactivate)
 {
-    isCalledFromDeactivate;
+	isCalledFromDeactivate;
 
     if (_pComposition != nullptr)
     {
@@ -95,3 +95,4 @@ void CSampleIME::_EndComposition(_In_opt_ ITfContext *pContext)
         pEditSession->Release();
     }
 }
+

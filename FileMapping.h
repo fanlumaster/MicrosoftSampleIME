@@ -11,17 +11,16 @@
 
 class CFileMapping : public CFile
 {
-  public:
+public:
     CFileMapping();
     virtual ~CFileMapping();
 
-    BOOL CreateFile(_In_ PCWSTR pFileName, DWORD desiredAccess, DWORD creationDisposition, DWORD sharedMode = 0,
-                    _Inout_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = nullptr, DWORD flagsAndAttributes = 0,
-                    _Inout_opt_ HANDLE templateFileHandle = nullptr)
+    BOOL CreateFile(_In_ PCWSTR pFileName, DWORD desiredAccess, DWORD creationDisposition,
+        DWORD sharedMode = 0, _Inout_opt_ LPSECURITY_ATTRIBUTES lpSecurityAttributes = nullptr, DWORD flagsAndAttributes = 0, _Inout_opt_ HANDLE templateFileHandle = nullptr)
 
     {
-        return CFile::CreateFile(pFileName, desiredAccess, creationDisposition, sharedMode, lpSecurityAttributes,
-                                 flagsAndAttributes, templateFileHandle);
+        return CFile::CreateFile(pFileName, desiredAccess, creationDisposition,
+            sharedMode, lpSecurityAttributes, flagsAndAttributes, templateFileHandle);
     }
 
     BOOL IsEndOfFile()
@@ -33,24 +32,15 @@ class CFileMapping : public CFile
         CFile::NextLine();
     }
 
-    const WCHAR *GetReadBufferPointer()
-    {
-        return CFile::GetReadBufferPointer();
-    }
-    DWORD_PTR GetFileSize()
-    {
-        return CFile::GetFileSize();
-    }
+    const WCHAR *GetReadBufferPointer() { return CFile::GetReadBufferPointer(); }
+    DWORD_PTR GetFileSize() { return CFile::GetFileSize(); }
 
-    LPCWSTR GetFileName()
-    {
-        return CFile::GetFileName();
-    }
+    LPCWSTR GetFileName() { return CFile::GetFileName(); }
 
-  protected:
+protected:
     BOOL SetupReadBuffer();
 
-  private:
-    HANDLE _fileMappingHandle; // file handle for CreateFileMapping
-    const VOID *_pMapBuffer;   // read buffer memory.
+private:
+    HANDLE _fileMappingHandle;  // file handle for CreateFileMapping
+    const VOID *_pMapBuffer;    // read buffer memory.
 };
